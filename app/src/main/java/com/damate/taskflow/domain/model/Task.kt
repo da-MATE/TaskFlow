@@ -8,5 +8,5 @@ data class Task(
     val description: String,
     val isCompleted: Boolean,
     val priority: Priority = Priority.MEDIUM,
-    val createdAt: LocalDate?
+    val createdAt: LocalDate
 )
