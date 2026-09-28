@@ -12,19 +12,44 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.damate.taskflow.ui.theme.TaskFlowTheme
+import androidx.lifecycle.ViewModelProvider
+//Room
+import androidx.room.Room
+import com.damate.taskflow.data.local.db.TaskDatabase
+import com.damate.taskflow.data.repository.TaskRepositoryImpl
+import com.damate.taskflow.ui.screens.home.HomeScreen
+import com.damate.taskflow.ui.screens.home.HomeViewModel
+import com.damate.taskflow.ui.screens.home.HomeViewModelFactory
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val database = Room.databaseBuilder(
+            applicationContext,
+            TaskDatabase::class.java,
+            "taskflow.db"
+        ).build()
+
+        val repository = TaskRepositoryImpl(database.taskDao())
+
+        val viewModel = ViewModelProvider(
+            this,
+            HomeViewModelFactory(repository)
+        )[HomeViewModel::class.java]
+
         setContent {
             TaskFlowTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                HomeScreen(
+                    viewModel = viewModel
+                )
+                /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "TaskFlow",
                         modifier = Modifier.padding(innerPadding)
                     )
-                }
+                }*/
             }
         }
     }
