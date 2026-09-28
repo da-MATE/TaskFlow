@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             TaskFlowTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "TaskFlow",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -42,6 +42,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     TaskFlowTheme {
-        Greeting("Android")
+        Greeting("TaskFlow")
     }
 }
